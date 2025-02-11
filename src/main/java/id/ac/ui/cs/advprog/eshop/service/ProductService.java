@@ -8,6 +8,7 @@ import java.util.UUID;
 public interface ProductService {
     Product create(Product product);
     Product edit(UUID productId, Product product);
+    boolean delete(UUID productId);
     List<Product> findAll();
     Product findOne(UUID productId);
 }
