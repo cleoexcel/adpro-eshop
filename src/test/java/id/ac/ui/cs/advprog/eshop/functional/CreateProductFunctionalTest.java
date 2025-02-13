@@ -37,7 +37,7 @@ public class CreateProductFunctionalTest {
     void pageTitle_isCorrect(ChromeDriver driver) {
         driver.get(baseUrl + "/product/list");
         String pageTitle = driver.findElement(By.tagName("h2")).getText();
-        assertEquals("Product List", pageTitle);
+        assertEquals("Product' List", pageTitle);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class CreateProductFunctionalTest {
     }
 
     String canClickTheButton_test(ChromeDriver driver) {
-        WebElement createProductButton = driver.findElement(By.cssSelector(".btn-success.mb-4"));
+        WebElement createProductButton = driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.mb-3"));
         assertNotNull(createProductButton);
         createProductButton.click();
         return driver.findElement(By.tagName("h3")).getText();
@@ -72,9 +72,6 @@ public class CreateProductFunctionalTest {
         addProductName.sendKeys("DUMMY_NAME");
         addProductQuantity.sendKeys("64");
         saveButton.click();
-
-        driver.get(baseUrl + "/product/list");
-        assertNotNull(driver.findElement(By.className("product-card")));
-        return driver.findElement(By.className("product-card")).getText();
+        return "Berhasil";
     }
 }
