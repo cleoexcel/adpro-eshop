@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.functional;
 
 import io.github.bonigarcia.seljup.SeleniumJupiter;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,17 +40,16 @@ class HomePageFunctionalTest {
     @Test
     void pageTitle_isCorrect(ChromeDriver driver) throws Exception {
         // Exercise
-        driver.get(baseUrl + "/homepage/home");
+        driver.get(baseUrl + "/product/list");
         String pageTitle = driver.getTitle();
-
-        // Verify
-        assertEquals("ADV Shop", pageTitle);
+        System.out.println("DEBUG: The page title is: " + pageTitle);
+        Assertions.assertEquals("ADV Shop", pageTitle);
     }
 
     @Test
     void welcomeMessage_homePage_isCorrect(ChromeDriver driver) throws Exception {
         // Exercise
-        driver.get(baseUrl + "/homepage/home");
+        driver.get(baseUrl + "/product/list");
         String welcomeMessage = driver.findElement(By.tagName("h3"))
                 .getText();
 
