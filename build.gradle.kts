@@ -49,7 +49,7 @@ tasks.register<Test>("unitTest") {
     group = "verification"
 
     filter {
-        excludeTestsMatching("*functionalTest")
+        excludeTestsMatching("*FunctionalTest")
     }
 }
 
@@ -58,7 +58,7 @@ tasks.register<Test>("functionalTest") {
     group = "verification"
 
     filter {
-        includeTestsMatching("*functionalTest")
+        includeTestsMatching("*FunctionalTest")
     }
 }
 
@@ -68,7 +68,7 @@ tasks.withType<Test>().configureEach {
 
 tasks.test {
     filter {
-        excludeTestsMatching("*functionalTest")
+        excludeTestsMatching("*FunctionalTest")
     }
     finalizedBy(tasks.jacocoTestReport)
 }
