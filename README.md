@@ -29,4 +29,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
   ```
-2. Dalam proyek ini, saya menerapkan _Continuous Integration_ (CI) dengan merancang workflow `ci.yml`. Proses ini secara otomatis menjalankan seluruh unit test setiap kali ada push atau pull request. Setelah itu, kode akan dipindai dan dianalisis menggunakan PMD untuk menilai kualitasnya serta mengidentifikasi _best practices_ yang dapat diterapkan. Setelah tahap ini selesai, proyek akan berlanjut ke tahap _Continuous Deployment/Delivery_, di mana Koyeb digunakan sebagai platform untuk _deployment_ otomatis. 
+2. Dalam proyek ini, saya menerapkan _Continuous Integration_ (CI) dengan merancang workflow `ci.yml`. Proses ini secara otomatis menjalankan seluruh unit test setiap kali ada push atau pull request. Setelah itu, kode akan dipindai dan dianalisis menggunakan PMD untuk menilai kualitasnya serta mengidentifikasi _best practices_ yang dapat diterapkan. Setelah tahap ini selesai, proyek akan berlanjut ke tahap _Continuous Deployment/Delivery_, di mana Koyeb digunakan sebagai platform untuk _deployment_ otomatis.
+
+## Modul 3
+1. Prinsip-Prinsip SOLID yang Diterapkan dalam Proyek
+- Single Responsibility Principle (SRP): Saya memisahkan Car Controller dari Product Controller karena keduanya memiliki peran yang berbeda. Dengan demikian, Car Controller tidak lagi mewarisi Product Controller, sehingga setiap kelas memiliki tanggung jawab yang jelas dan spesifik.
+- Open/Closed Principle (OCP): Struktur kode saya rancang agar memungkinkan penambahan route baru di dalam controller tanpa harus mengubah fungsi yang sudah ada sebelumnya untuk memastikan bahwa kode lebih mudah digunakan.
+- Interface Segregation Principle (ISP): service dalam proyek ini saya buat dengan hanya menyediakan metode yang benar-benar dibutuhkan, sehingga tidak ada metode yang harus diimplementasikan secara paksa meskipun tidak relevan dengan kebutuhan kelas.
+- Dependency Inversion Principle (DIP): saya mengubah carService agar bergantung pada interface bernama CarService. Sebelumnya, Car Controller bergantung pada bean bernama carService, yang terhubung langsung dengan kelas konkret. Berdasarkan DIP, sebaiknya ketergantungan ini diarahkan ke interface, bukan kelas konkret.
+
+2. Keuntungan Menerapkan Prinsip SOLID
+- Menerapkan prinsip SOLID dalam proyek memiliki banyak manfaat, terutama dalam meningkatkan keterbacaan dan pemeliharaan kode. Sebagai contoh, dengan menerapkan SRP, setiap kelas memiliki tanggung jawab yang jelas, sehingga memudahkan pengembang lain memahami dan bekerja dengan kode tersebut.
+Selain itu, penerapan OCP memungkinkan kita menambahkan fitur baru, seperti controller tambahan, tanpa harus mengubah kode yang telah ada. Ini membuat pengembangan lebih fleksibel dan meminimalkan risiko kerusakan pada sistem yang sudah berjalan.
+Dengan menggunakan LSP, kita tidak perlu mewarisi metode yang tidak relevan dari kelas induk. Misalnya, jika kita memiliki subclass yang tidak membutuhkan semua metode dari superclass, maka lebih baik untuk memisahkan fungsionalitas tersebut. ISP juga memastikan bahwa kelas hanya mengimplementasikan metode yang diperlukan, sehingga kode menjadi lebih bersih dan lebih mudah dipelihara.
+DIP membantu meningkatkan fleksibilitas kode dengan memastikan bahwa dependensi diarahkan ke interface, bukan ke kelas konkret. Dengan demikian, kita dapat mengganti implementasi dengan lebih mudah tanpa mempengaruhi kelas yang menggunakannya.
+
+3. Kekurangan Jika Tidak Menerapkan SOLID
+- Tanpa mengikuti prinsip SOLID, kode bisa menjadi sulit dipahami dan dikelola. Misalnya, jika sebuah kelas memiliki terlalu banyak tanggung jawab yang tidak terkait, maka kode akan menjadi membingungkan bagi pengembang lain yang ingin membaca atau mengembangkan sistem.
+Selain itu, tanpa OCP, menambahkan fitur baru bisa mengharuskan kita mengubah banyak bagian kode yang sudah ada, meningkatkan risiko bug dan mengganggu stabilitas aplikasi.
+Tanpa LSP dan ISP, kita mungkin harus menangani metode yang tidak relevan dari superclass atau mengimplementasikan metode yang sebenarnya tidak dibutuhkan oleh suatu kelas. Hal ini bisa membuat kode lebih besar, lebih kompleks, dan sulit untuk diuji.
+Ketidakteraturan dalam kode juga menyulitkan kolaborasi tim. Jika kode tidak mengikuti prinsip SOLID, pengembang lain mungkin kesulitan memahami alur program dan lebih rentan membuat kesalahan. Selain itu, tanpa DIP, dependensi yang kuat pada kelas konkret dapat membuat kode sulit diubah dan diuji, memperlambat proses pengembangan.
+Dengan menerapkan prinsip SOLID, kode menjadi lebih baik, mudah diperluas, dan mudah dimaintanance dalam jangka panjang.
