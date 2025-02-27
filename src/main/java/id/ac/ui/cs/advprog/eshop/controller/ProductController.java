@@ -17,8 +17,11 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+    private final ProductService service;
     @Autowired
-    private ProductService service;
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping("/create")
     public String createProductPage(Model model) {
@@ -50,13 +53,13 @@ public class ProductController {
     @PostMapping("/edit/{productId}")
     public String editProductPatch(@PathVariable UUID productId, @ModelAttribute Product editedProduct, Model model) {
         service.edit(productId, editedProduct);
-        return "redirect:/product/list";
+        return "redirect:../list";
     }
 
     @GetMapping("/delete/{productId}")
     public String deleteProductPath(@PathVariable UUID productId, Model model) {
         service.delete(productId);
-        return "redirect:/product/list";
+        return "redirect:../list";
     }
 }
 
