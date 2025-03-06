@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -37,7 +38,7 @@ public class PaymentServiceImplTest {
     void setUp() {
         List<Product> products = new ArrayList<>();
         Product product1 = new Product();
-        product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product1.setProductId(UUID.fromString("eb558e9f-1c39-460e-8860-71af6af63bd6"));
         product1.setProductName("Sampo Cap Bambang");
         product1.setProductQuantity(2);
         products.add(product1);
@@ -144,16 +145,21 @@ public class PaymentServiceImplTest {
     @Test
     void testFindByIdIfIdFound() {
         Payment payment = payments.get(1);
+
         doReturn(payment).when(paymentRepository).findById(payment.getId());
 
         Payment result = paymentService.getPayment(payment.getId());
+        verify(paymentRepository, times(1)).findById(payment.getId());
         assertEquals(payment.getId(), result.getId());
     }
 
     @Test
     void testFindByIdIfIdNotFound() {
         doReturn(null).when(paymentRepository).findById("zczc");
-        assertNull(paymentService.getPayment("zczc"));
+
+        Payment result = paymentService.getPayment("zczc");
+        assertNull(result);
+        verify(paymentRepository, times(1)).findById("zczc");
     }
 
     @Test
