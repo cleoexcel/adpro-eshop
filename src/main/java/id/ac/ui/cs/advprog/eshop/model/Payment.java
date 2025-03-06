@@ -1,5 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,6 +17,12 @@ public class Payment {
 
     public Payment(String id, String method, String status, Map<String, String> paymentData) {
         this.id = id;
+
+        if (!PaymentMethod.contains(method)
+                || !PaymentStatus.contains(status)) {
+            throw new IllegalArgumentException();
+        }
+
         this.method = method;
         this.status = status;
         this.paymentData = paymentData;
@@ -24,14 +32,14 @@ public class Payment {
                     || !paymentData.containsKey("referenceCode")
                     || paymentData.get("bankName") == null
                     || paymentData.get("referenceCode") == null) {
-                this.status = "REJECTED";
+                this.status = PaymentStatus.REJECTED.getValue();
             }
         } else if (this.method.equals("VOUCHER_CODE")) {
             if (!paymentData.containsKey("voucherCode")
                     || paymentData.get("voucherCode") == null
                     || paymentData.get("voucherCode").length() != 16
                     || !paymentData.get("voucherCode").startsWith("ESHOP")) {
-                this.status = "REJECTED";
+                this.status = PaymentStatus.REJECTED.getValue();
                 return;
             }
 
@@ -43,7 +51,7 @@ public class Payment {
                 }
             }
             if (numericalCount != 8) {
-                this.status = "REJECTED";
+                this.status = PaymentStatus.REJECTED.getValue();
             }
         } else {
             throw new IllegalArgumentException();
