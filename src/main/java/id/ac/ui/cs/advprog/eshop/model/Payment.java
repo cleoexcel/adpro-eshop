@@ -14,18 +14,21 @@ public class Payment {
     String method;
     String status;
     Map<String, String> paymentData;
+    Order order;
 
-    public Payment(String id, String method, String status, Map<String, String> paymentData) {
+    public Payment(String id, String method, String status, Map<String, String> paymentData, Order order) {
         this.id = id;
 
         if (!PaymentMethod.contains(method)
-                || !PaymentStatus.contains(status)) {
+                || !PaymentStatus.contains(status)
+                || order == null) {
             throw new IllegalArgumentException();
         }
 
         this.method = method;
         this.status = status;
         this.paymentData = paymentData;
+        this.order = order;
 
         if (this.method.equals("BANK_TRANSFER")) {
             if (!paymentData.containsKey("bankName")
