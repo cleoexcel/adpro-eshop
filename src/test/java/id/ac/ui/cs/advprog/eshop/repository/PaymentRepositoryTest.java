@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -84,7 +85,7 @@ public class PaymentRepositoryTest {
         Payment payment = this.payments.get(1);
         paymentRepository.save(payment);
 
-        Payment newPayment = new Payment(payment.getId(), payment.getMethod(), PaymentStatus.REJECTED.getValue(), payment.getPaymentData(), orders.get(1));
+        Payment newPayment = new Payment(payment.getId(), payment.getMethod(), PaymentStatus.REJECTED.getValue(), payment.getPaymentData(), orders.get(0));
         Payment result = paymentRepository.save(newPayment);
         assertEquals(payment.getId(), result.getId());
 
