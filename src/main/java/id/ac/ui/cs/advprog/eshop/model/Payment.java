@@ -20,15 +20,14 @@ public class Payment {
         this.id = id;
 
         if (!PaymentMethod.contains(method)
-                || !PaymentStatus.contains(status)
                 || order == null) {
             throw new IllegalArgumentException();
         }
 
         this.method = method;
-        this.status = status;
         this.paymentData = paymentData;
         this.order = order;
+        this.setStatus(status);
 
         if (this.method.equals("BANK_TRANSFER")) {
             if (!paymentData.containsKey("bankName")
@@ -59,5 +58,18 @@ public class Payment {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    public void setStatus(String status) {
+        if (!PaymentStatus.contains(status)) {
+            throw new IllegalArgumentException();
+        }
+
+        if (status.equals("SUCCESS")) {
+            this.order.setStatus("SUCCESS");
+        } else if (status.equals("REJECTED")) {
+            this.order.setStatus("FAILED");
+        }
+        this.status = status;
     }
 }
